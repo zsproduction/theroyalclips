@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<meta name="description" content="Royal Clips - Watch, Create and Earn">
+<title>ROYAL CLIPS</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  background:#050505;
+  color:white;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+body{
+  padding-bottom:75px;
+}
+
+/* TOP BAR */
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:64px;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 15px;
+  background:rgba(5,5,5,.96);
+  border-bottom:1px solid #242424;
+  backdrop-filter:blur(10px);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.logo-crown{
+  font-size:32px;
+  filter:drop-shadow(0 0 7px #dcae29);
+}
+
+.logo-text{
+  color:#f2c64b;
+  font-size:20px;
+}
+
+.profile-button{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#181818;
+  border:1px solid #444;
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* SCREENS */
+.screen{
+  display:none;
+  width:100%;
+  max-width:850px;
+  margin:auto;
+  padding:82px 12px 90px;
+}
+
+.screen.active{
+  display:block;
+}
+
+/* FEED */
+.feed-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.feed-title h1{
+  font-size:25px;
+}
+
+.feed-title p{
+  color:#999;
+  font-size:13px;
+  margin-top:4px;
+}
+
+.video-feed{
+  width:100%;
+}
+
+.video{
+  position:relative;
+  width:100%;
+  height:calc(100vh - 145px);
+  min-height:500px;
+  max-height:780px;
+  margin-bottom:18px;
+  overflow:hidden;
+  border-radius:18px;
+  background:linear-gradient(145deg,#151515,#322607);
+  border:1px solid #292929;
+}
+
+.video video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.video-background{
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:80px;
+  background:
+    radial-gradient(circle at 50% 30%,#4a3913,#151515 60%);
+}
+
+.video-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    transparent 40%,
+    rgba(0,0,0,.1) 50%,
+    rgba(0,0,0,.9) 100%
+  );
+}
+
+.video-info{
+  position:absolute;
+  left:18px;
+  right:90px;
+  bottom:22px;
+}
+
+.video-info h2{
+  font-size:19px;
+  margin-bottom:7px;
+}
+
+.video-info p{
+  color:#ddd;
+  line-height:1.5;
+  font-size:14px;
+}
+
+.actions{
+  position:absolute;
+  right:12px;
+  bottom:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.action{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  background:rgba(0,0,0,.65);
+  border:1px solid #555;
+  color:white;
+  font-size:21px;
+  cursor:pointer;
+}
+
+.action.liked{
+  color:#ff3867;
+}
+
+/* PAGE HEAD */
+.page-head{
+  margin-bottom:20px;
+}
+
+.page-head h2{
+  font-size:28px;
+}
+
+.page-head p{
+  color:#999;
+  margin-top:5px;
+}
+
+/* SEARCH */
+.search-box{
+  width:100%;
+  padding:15px;
+  border-radius:14px;
+  background:#151515;
+  border:1px solid #383838;
+  color:white;
+  font-size:16px;
+  outline:none;
+}
+
+.search-box:focus{
+  border-color:#dcae29;
+}
+
+.search-result{
+  padding:16px;
+  margin-top:10px;
+  border-radius:14px;
+  background:#141414;
+  border:1px solid #292929;
+}
+
+/* UPLOAD */
+.upload-area{
+  min-height:220px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border:2px dashed #555;
+  border-radius:18px;
+  cursor:pointer;
+  background:#111;
+  margin-bottom:18px;
+}
+
+.upload-area:hover{
+  border-color:#dcae29;
+}
+
+.upload-plus{
+  color:#e0b32d;
+  font-size:55px;
+}
+
+.upload-area span{
+  color:#999;
+  font-size:13px;
+}
+
+.primary{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:14px;
+  background:linear-gradient(90deg,#b87e08,#f4cf55);
+  color:#080808;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.primary:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+
+.preview{
+  margin-bottom:15px;
+}
+
+.preview video{
+  width:100%;
+  max-height:400px;
+  border-radius:15px;
+}
+
+/* MONETIZATION */
+.earn-card{
+  background:#131313;
+  border:1px solid #333;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:15px;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:25px;
+}
+
+.status span{
+  color:#999;
+}
+
+.status strong{
+  color:#e4bd43;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  color:#bbb;
+  font-size:14px;
+  margin:10px 0 7px;
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  background:#292929;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:18px;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#b77d00,#ffe37c);
+  border-radius:20px;
+  transition:.5s;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.stat{
+  padding:18px;
+  border-radius:16px;
+  background:#141414;
+  border:1px solid #292929;
+}
+
+.stat span{
+  display:block;
+  color:#888;
+  font-size:12px;
+}
+
+.stat strong{
+  display:block;
+  font-size:22px;
+  margin-top:7px;
+  color:#f2c64b;
+}
+
+.info{
+  margin-top:15px;
+  padding:18px;
+  border-radius:16px;
+  background:#111;
+  border:1px solid #292929;
+  color:#bbb;
+  line-height:1.6;
+}
+
+/* PROFILE */
+.profile{
+  text-align:center;
+  background:#131313;
+  border:1px solid #292929;
+  border-radius:20px;
+  padding:30px 15px;
+}
+
+.profile-logo{
+  font-size:70px;
+  margin-bottom:10px;
+  filter:drop-shadow(0 0 12px #dcae29);
+}
+
+.profile h2{
+  color:#f1c54b;
+}
+
+.profile p{
+  color:#888;
+  margin-top:5px;
+}
+
+.profile-stats{
+  display:flex;
+  justify-content:space-around;
+  margin-top:25px;
+}
+
+.profile-stats strong{
+  display:block;
+  font-size:21px;
+}
+
+.profile-stats span{
+  color:#888;
+  font-size:12px;
+}
+
+.secondary{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  background:#171717;
+  color:white;
+  border:1px solid #333;
+  border-radius:13px;
+  cursor:pointer;
+}
+
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:70px;
+  z-index:200;
+  display:flex;
+  background:rgba(5,5,5,.98);
+  border-top:1px solid #292929;
+}
+
+.nav{
+  flex:1;
+  border:0;
+  background:transparent;
+  color:#777;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  cursor:pointer;
+}
+
+.nav span{
+  font-size:22px;
+}
+
+.nav small{
+  font-size:10px;
+}
+
+.nav.active{
+  color:#f2c64b;
+}
+
+.create-button{
+  color:#050505 !important;
+}
+
+.create-button span{
+  background:#e0b22d;
+  border-radius:10px;
+  padding:2px 13px;
+  font-size:26px !important;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  z-index:500;
+  bottom:85px;
+  left:50%;
+  transform:translate(-50%,20px);
+  background:#efc64c;
+  color:#080808;
+  padding:11px 18px;
+  border-radius:12px;
+  font-weight:bold;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+@media(min-width:700px){
+  .bottom-nav{
+    width:700px;
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
+    border-radius:18px 18px 0 0;
+  }
+
+  .video{
+    height:680px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+
+  <div class="logo">
+    <div class="logo-crown">♛</div>
+    <div class="logo-text">ROYAL CLIPS</div>
+  </div>
+
+  <button class="profile-button" onclick="openScreen('profile')">
+    👤
+  </button>
+
+</header>
+
+
+<!-- HOME -->
+<section id="home" class="screen active">
+
+  <div class="feed-title">
+    <div>
+      <h1>For You</h1>
+      <p>Watch • Create • Earn</p>
+    </div>
+  </div>
+
+  <div id="videoFeed" class="video-feed"></div>
+
+</section>
+
+
+<!-- SEARCH -->
+<section id="search" class="screen">
+
+  <div class="page-head">
+    <h2>Search</h2>
+    <p>Find creators and clips</p>
+  </div>
+
+  <input
+    id="searchInput"
+    class="search-box"
+    type="text"
+    placeholder="Search Royal Clips..."
+  >
+
+  <div id="searchResults"></div>
+
+</section>
+
+
+<!-- UPLOAD -->
+<section id="upload" class="screen">
+
+  <div class="page-head">
+    <h2>Create a Clip</h2>
+    <p>Upload your short video</p>
+  </div>
+
+  <label class="upload-area" for="videoInput">
+
+    <div class="upload-plus">＋</div>
+
+    <strong>Select Video</strong>
+
+    <span>MP4, WebM and other browser-supported formats</span>
+
+  </label>
+
+  <input
+    id="videoInput"
+    type="file"
+    accept="video/*"
+    hidden
+  >
+
+  <div id="preview" class="preview"></div>
+
+  <button
+    id="publishButton"
+    class="primary"
+    disabled
+  >
+    Publish Clip
+  </button>
+
+</section>
+
+
+<!-- MONETIZATION -->
+<section id="earn" class="screen">
+
+  <div class="page-head">
+    <h2>Monetization</h2>
+    <p>Royal Clips Creator Program</p>
+  </div>
+
+
+  <div class="earn-card">
+
+    <div class="status">
+
+      <span>Status</span>
+
+      <strong id="eligibility">
+        NOT ELIGIBLE
+      </strong>
+
+    </div>
+
+
+    <div class="progress-label">
+
+      <span>Followers</span>
+
+      <span>
+        <b id="followers">0</b> / 100
+      </span>
+
+    </div>
+
+    <div class="progress">
+      <div
+        id="followersBar"
+        class="progress-bar"
+      ></div>
+    </div>
+
+
+    <div class="progress-label">
+
+      <span>3-Month Views</span>
+
+      <span>
+        <b id="views">0</b> / 10,000
+      </span>
+
+    </div>
+
+    <div class="progress">
+      <div
+        id="viewsBar"
+        class="progress-bar"
+      ></div>
+    </div>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+      <span>Estimated Earnings</span>
+      <strong id="earnings">$0.00</strong>
+    </div>
+
+    <div class="stat">
+      <span>Balance</span>
+      <strong id="balance">$0.00</strong>
+    </div>
+
+    <div class="stat">
+      <span>Monthly Views</span>
+      <strong id="monthlyViews">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>Likes</span>
+      <strong id="likes">0</strong>
+    </div>
+
+  </div>
+
+
+  <div class="info">
+
+    <strong>Creator eligibility</strong>
+
+    <br><br>
+
+    A creator becomes eligible when both conditions
+    are reached:
+
+    <br><br>
+
+    👥 <b>100 followers</b>
+
+    <br>
+
+    👁️ <b>10,000 eligible views during the previous 3 months</b>
+
+    <br><br>
+
+    Actual advertising revenue requires a real
+    advertising account, approved traffic, backend
+    revenue tracking and a valid payout system.
+
+  </div>
+
+</section>
+
+
+<!-- PROFILE -->
+<section id="profile" class="screen">
+
+  <div class="profile">
+
+    <div class="profile-logo">
+      ♛
+    </div>
+
+    <h2 id="profileName">
+      Royal Creator
+    </h2>
+
+    <p>
+      @royalcreator
+    </p>
+
+
+    <div class="profile-stats">
+
+      <div>
+        <strong id="profileFollowers">0</strong>
+        <span>Followers</span>
+      </div>
+
+      <div>
+        <strong>0</strong>
+        <span>Following</span>
+      </div>
+
+      <div>
+        <strong id="profileLikes">0</strong>
+        <span>Likes</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <button
+    class="secondary"
+    onclick="editProfile()"
+  >
+    Edit Profile
+  </button>
+
+
+  <button
+    class="secondary"
+    onclick="demoProgress()"
+  >
+    Demo: Add 10 Followers + 500 Views
+  </button>
+
+</section>
+
+
+<!-- NAVIGATION -->
+<nav class="bottom-nav">
+
+  <button
+    class="nav active"
+    data-screen="home"
+    onclick="openScreen('home')"
+  >
+    <span>⌂</span>
+    <small>Home</small>
+  </button>
+
+
+  <button
+    class="nav"
+    data-screen="search"
+    onclick="openScreen('search')"
+  >
+    <span>⌕</span>
+    <small>Search</small>
+  </button>
+
+
+  <button
+    class="nav create-button"
+    data-screen="upload"
+    onclick="openScreen('upload')"
+  >
+    <span>＋</span>
+    <small>Create</small>
+  </button>
+
+
+  <button
+    class="nav"
+    data-screen="earn"
+    onclick="openScreen('earn')"
+  >
+    <span>♛</span>
+    <small>Earn</small>
+  </button>
+
+
+  <button
+    class="nav"
+    data-screen="profile"
+    onclick="openScreen('profile')"
+  >
+    <span>◉</span>
+    <small>Profile</small>
+  </button>
+
+</nav>
+
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+/* ==============================
+   ROYAL CLIPS DATA
+================================ */
+
+let royalClips =
+JSON.parse(
+  localStorage.getItem("royalClips")
+) || {
+
+  followers:0,
+
+  views:0,
+
+  monthlyViews:0,
+
+  likes:0,
+
+  earnings:0,
+
+  balance:0,
+
+  name:"Royal Creator",
+
+  customVideos:[]
+
+};
+
+
+/* ==============================
+   SAVE DATA
+================================ */
+
+function saveData(){
+
+  localStorage.setItem(
+    "royalClips",
+    JSON.stringify(royalClips)
+  );
+
+}
+
+
+/* ==============================
+   TOAST
+================================ */
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.innerText = message;
+
+  toast.classList.add("show");
+
+  setTimeout(function(){
+
+    toast.classList.remove("show");
+
+  },2200);
+
+}
+
+
+/* ==============================
+   SCREEN NAVIGATION
+================================ */
+
+function openScreen(screen){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(item){
+
+      item.classList.remove("active");
+
+    });
+
+
+  document
+    .getElementById(screen)
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav")
+    .forEach(function(item){
+
+      item.classList.remove("active");
+
+    });
+
+
+  const button =
+    document.querySelector(
+      '[data-screen="' +
+      screen +
+      '"]'
+    );
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+
+  window.scrollTo(0,0);
+
+}
+
+
+/* ==============================
+   DEMO VIDEOS
+================================ */
+
+let videos = [
+
+  {
+    id:1,
+    user:"@royalcreator",
+    title:"Welcome to Royal Clips 👑",
+    description:"Watch, create and earn.",
+    views:1250,
+    liked:false
+  },
+
+  {
+    id:2,
+    user:"@travelking",
+    title:"Beautiful Sunset 🌅",
+    description:"Amazing moments from around the world.",
+    views:850,
+    liked:false
+  },
+
+  {
+    id:3,
+    user:"@foodqueen",
+    title:"Amazing Food 🍔",
+    description:"Quick food video for everyone.",
+    views:1640,
+    liked:false
+  },
+
+  {
+    id:4,
+    user:"@discover",
+    title:"Amazing World 🌎",
+    description:"Interesting places and facts.",
+    views:2140,
+    liked:false
+  }
+
+];
+
+
+videos =
+videos.concat(
+  royalClips.customVideos
+);
+
+
+/* ==============================
+   RENDER VIDEOS
+================================ */
+
+function renderVideos(){
+
+  const feed =
+    document.getElementById("videoFeed");
+
+
+  feed.innerHTML = "";
+
+
+  videos.forEach(function(video){
+
+    const card =
+      document.createElement("article");
+
+
+    card.className = "video";
+
+
+    card.innerHTML = `
+
+      <div class="video-background">
+        ▶
+      </div>
+
+      <div class="video-overlay"></div>
+
+      <div class="video-info">
+
+        <h2>
+          ${escapeHTML(video.title)}
+        </h2>
+
+        <p>
+          ${escapeHTML(video.user)}
+          •
+          ${Number(video.views).toLocaleString()}
+          views
+          <br>
+          ${escapeHTML(video.description)}
+        </p>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="action ${
+            video.liked ? "liked" : ""
+          }"
+          onclick="likeVideo(${video.id})"
+        >
+          ♥
+        </button>
+
+
+        <button
+          class="action"
+          onclick="commentVideo()"
+        >
+          💬
+        </button>
+
+
+        <button
+          class="action"
+          onclick="shareVideo()"
+        >
+          ↗
+        </button>
+
+      </div>
+
+    `;
+
+
+    feed.appendChild(card);
+
+  });
+
+}
+
+
+/* ==============================
+   LIKE
+================================ */
+
+function likeVideo(id){
+
+  const video =
+    videos.find(function(item){
+
+      return item.id === id;
+
+    });
+
+
+  if(!video)return;
+
+
+  video.liked =
+    !video.liked;
+
+
+  if(video.liked){
+
+    royalClips.likes++;
+
+  }else{
+
+    royalClips.likes--;
+
+  }
+
+
+  saveData();
+
+  renderVideos();
+
+  updateDashboard();
+
+}
+
+
+/* ==============================
+   COMMENT
+================================ */
+
+function commentVideo(){
+
+  showToast(
+    "Comments will connect to the backend in V2."
+  );
+
+}
+
+
+/* ==============================
+   SHARE
+================================ */
+
+function shareVideo(){
+
+  if(
+    navigator.share
+  ){
+
+    navigator.share({
+
+      title:"Royal Clips",
+
+      text:"Check this Royal Clips video!"
+
+    });
+
+  }else{
+
+    navigator.clipboard.writeText(
+      window.location.href
+    );
+
+    showToast(
+      "Royal Clips link copied!"
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   UPLOAD
+================================ */
+
+const videoInput =
+  document.getElementById(
+    "videoInput"
+  );
+
+
+const publishButton =
+  document.getElementById(
+    "publishButton"
+  );
+
+
+videoInput.addEventListener(
+  "change",
+  function(event){
+
+    const file =
+      event.target.files[0];
+
+
+    if(!file)return;
+
+
+    const url =
+      URL.createObjectURL(file);
+
+
+    document.getElementById(
+      "preview"
+    ).innerHTML = `
+
+      <video
+        src="${url}"
+        controls
+      ></video>
+
+    `;
+
+
+    publishButton.disabled =
+      false;
+
+
+    publishButton.dataset.video =
+      file.name;
+
+  }
+);
+
+
+/* ==============================
+   PUBLISH
+================================ */
+
+publishButton.addEventListener(
+  "click",
+  function(){
+
+    const title =
+      publishButton.dataset.video
+      ||
+      "My Royal Clip";
+
+
+    const newVideo = {
+
+      id:Date.now(),
+
+      user:
+        "@"+
+        royalClips.name
+          .toLowerCase()
+          .replace(/\s+/g,""),
+
+      title:title,
+
+      description:
+        "New Royal Clips video",
+
+      views:0,
+
+      liked:false
+
+    };
+
+
+    royalClips.customVideos
+      .unshift(newVideo);
+
+
+    videos.unshift(newVideo);
+
+
+    saveData();
+
+    renderVideos();
+
+
+    publishButton.disabled =
+      true;
+
+
+    document.getElementById(
+      "preview"
+    ).innerHTML = "";
+
+
+    videoInput.value = "";
+
+
+    showToast(
+      "Clip published!"
+    );
+
+
+    openScreen("home");
+
+  }
+);
+
+
+/* ==============================
+   SEARCH
+================================ */
+
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "input",
+    function(event){
+
+      const query =
+        event.target.value
+          .toLowerCase();
+
+
+      const results =
+        videos.filter(
+          function(video){
+
+            return (
+              video.title
+                .toLowerCase()
+                .includes(query)
+              ||
+              video.user
+                .toLowerCase()
+                .includes(query)
+              ||
+              video.description
+                .toLowerCase()
+                .includes(query)
+            );
+
+          }
+        );
+
+
+      const resultBox =
+        document.getElementById(
+          "searchResults"
+        );
+
+
+      if(results.length === 0){
+
+        resultBox.innerHTML =
+          "<p style='color:#888;margin-top:20px'>No results found.</p>";
+
+        return;
+
+      }
+
+
+      resultBox.innerHTML =
+        results.map(
+          function(video){
+
+            return `
+
+              <div class="search-result">
+
+                <strong>
+                  ${escapeHTML(video.title)}
+                </strong>
+
+                <br>
+
+                <span style="color:#888">
+                  ${escapeHTML(video.user)}
+                  •
+                  ${video.views}
+                  views
+                </span>
+
+              </div>
+
+            `;
+
+          }
+        ).join("");
+
+    }
+  );
+
+
+/* ==============================
+   MONETIZATION
+================================ */
+
+function updateDashboard(){
+
+  document.getElementById(
+    "followers"
+  ).innerText =
+    royalClips.followers
+      .toLocaleString();
+
+
+  document.getElementById(
+    "views"
+  ).innerText =
+    royalClips.views
+      .toLocaleString();
+
+
+  document.getElementById(
+    "monthlyViews"
+  ).innerText =
+    royalClips.monthlyViews
+      .toLocaleString();
+
+
+  document.getElementById(
+    "likes"
+  ).innerText =
+    royalClips.likes
+      .toLocaleString();
+
+
+  document.getElementById(
+    "earnings"
+  ).innerText =
+    "$"+
+    Number(
+      royalClips.earnings
+    ).toFixed(2);
+
+
+  document.getElementById(
+    "balance"
+  ).innerText =
+    "$"+
+    Number(
+      royalClips.balance
+    ).toFixed(2);
+
+
+  const followerPercent =
+    Math.min(
+      royalClips.followers,
+      100
+    );
+
+
+  const viewPercent =
+    Math.min(
+      royalClips.views / 100,
+      100
+    );
+
+
+  document.getElementById(
+    "followersBar"
+  ).style.width =
+    followerPercent+"%";
+
+
+  document.getElementById(
+    "viewsBar"
+  ).style.width =
+    viewPercent+"%";
+
+
+  const eligible =
+    royalClips.followers >= 100
+    &&
+    royalClips.views >= 10000;
+
+
+  document.getElementById(
+    "eligibility"
+  ).innerText =
+    eligible
+    ?
+    "✓ ELIGIBLE"
+    :
+    "NOT ELIGIBLE";
+
+
+  document.getElementById(
+    "profileFollowers"
+  ).innerText =
+    royalClips.followers
+      .toLocaleString();
+
+
+  document.getElementById(
+    "profileLikes"
+  ).innerText =
+    royalClips.likes
+      .toLocaleString();
+
+
+  document.getElementById(
+    "profileName"
+  ).innerText =
+    royalClips.name;
+
+}
+
+
+/* ==============================
+   DEMO PROGRESS
+================================ */
+
+function demoProgress(){
+
+  royalClips.followers += 10;
+
+  royalClips.views += 500;
+
+  royalClips.monthlyViews += 500;
+
+  saveData();
+
+  updateDashboard();
+
+  showToast(
+    "10 followers + 500 views added!"
+  );
+
+}
+
+
+/* ==============================
+   EDIT PROFILE
+================================ */
+
+function editProfile(){
+
+  const name =
+    prompt(
+      "Enter your creator name:",
+      royalClips.name
+    );
+
+
+  if(
+    name &&
+    name.trim()
+  ){
+
+    royalClips.name =
+      name.trim();
+
+
+    saveData();
+
+    updateDashboard();
+
+    showToast(
+      "Profile updated!"
+    );
+
+  }
+
+}
+
+
+/* ==============================
+   SECURITY HELPER
+================================ */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ==============================
+   START APP
+================================ */
+
+renderVideos();
+
+updateDashboard();
+
+</script>
+
+</body>
+</html>
