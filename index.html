@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050505">
-<meta name="description" content="Royal Clips - Watch, Create and Earn">
 <title>ROYAL CLIPS</title>
 
 <style>
@@ -12,158 +11,230 @@
   box-sizing:border-box;
   margin:0;
   padding:0;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
-  width:100%;
-  height:100%;
-  background:#050505;
-  color:white;
-  font-family:Arial,Helvetica,sans-serif;
-  overflow-x:hidden;
+:root{
+  --gold:#f5c542;
+  --gold2:#ffdf72;
+  --black:#050505;
+  --dark:#101010;
+  --card:#171717;
+  --gray:#aaa;
+  --white:#fff;
+  --red:#ff3158;
 }
 
 body{
-  padding-bottom:75px;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#000;
+  color:white;
+  overflow-x:hidden;
+}
+
+button,input,textarea{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  background:#050505;
+  position:relative;
 }
 
 /* TOP BAR */
+
 .topbar{
   position:fixed;
   top:0;
-  left:0;
-  right:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
   height:64px;
+  background:rgba(5,5,5,.92);
+  backdrop-filter:blur(15px);
   z-index:100;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:8px 15px;
-  background:rgba(5,5,5,.96);
-  border-bottom:1px solid #242424;
-  backdrop-filter:blur(10px);
+  padding:0 15px;
+  border-bottom:1px solid #222;
 }
 
-.logo{
+.brand{
   display:flex;
   align-items:center;
-  gap:9px;
+  gap:8px;
+}
+
+.brand-logo{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+  display:none;
+}
+
+.crown{
+  font-size:31px;
+  color:var(--gold);
+  line-height:1;
+}
+
+.brand-text{
+  font-size:18px;
   font-weight:900;
   letter-spacing:1px;
 }
 
-.logo-crown{
-  font-size:32px;
-  filter:drop-shadow(0 0 7px #dcae29);
+.brand-text span{
+  color:var(--gold);
 }
 
-.logo-text{
-  color:#f2c64b;
-  font-size:20px;
-}
-
-.profile-button{
-  width:42px;
-  height:42px;
+.top-btn{
+  width:40px;
+  height:40px;
   border-radius:50%;
-  background:#181818;
-  border:1px solid #444;
+  background:#191919;
   color:white;
-  font-size:20px;
-  cursor:pointer;
+  font-size:19px;
 }
 
 /* SCREENS */
+
 .screen{
   display:none;
-  width:100%;
-  max-width:850px;
-  margin:auto;
-  padding:82px 12px 90px;
+  padding-top:70px;
+  padding-bottom:90px;
+  min-height:100vh;
 }
 
 .screen.active{
   display:block;
 }
 
-/* FEED */
-.feed-title{
+/* HOME */
+
+.feed-tabs{
   display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:12px;
+  justify-content:center;
+  gap:25px;
+  padding:12px 0;
+  position:sticky;
+  top:64px;
+  z-index:20;
+  background:rgba(5,5,5,.9);
+  backdrop-filter:blur(10px);
 }
 
-.feed-title h1{
-  font-size:25px;
+.feed-tabs button{
+  background:none;
+  color:#777;
+  font-weight:bold;
+  font-size:15px;
+  padding:7px;
 }
 
-.feed-title p{
-  color:#999;
-  font-size:13px;
-  margin-top:4px;
+.feed-tabs button.active{
+  color:white;
+  border-bottom:2px solid var(--gold);
 }
 
-.video-feed{
+/* VIDEO CARD */
+
+.feed{
   width:100%;
 }
 
-.video{
+.video-card{
+  min-height:calc(100vh - 155px);
+  margin-bottom:10px;
   position:relative;
-  width:100%;
-  height:calc(100vh - 145px);
-  min-height:500px;
-  max-height:780px;
-  margin-bottom:18px;
   overflow:hidden;
-  border-radius:18px;
-  background:linear-gradient(145deg,#151515,#322607);
-  border:1px solid #292929;
+  background:#111;
+  border-radius:12px;
 }
 
-.video video{
+.video-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 20%,#4d3800,transparent 30%),
+    radial-gradient(circle at 80% 70%,#301f00,transparent 35%),
+    linear-gradient(145deg,#171717,#050505);
+}
+
+.real-video{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
-}
-
-.video-background{
-  width:100%;
-  height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:80px;
-  background:
-    radial-gradient(circle at 50% 30%,#4a3913,#151515 60%);
+  background:#111;
 }
 
 .video-overlay{
   position:absolute;
   inset:0;
   background:linear-gradient(
-    transparent 40%,
-    rgba(0,0,0,.1) 50%,
+    transparent 35%,
+    rgba(0,0,0,.15) 50%,
     rgba(0,0,0,.9) 100%
   );
+  pointer-events:none;
+}
+
+.demo-play{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+  border:2px solid rgba(255,255,255,.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:28px;
+  z-index:3;
 }
 
 .video-info{
   position:absolute;
-  left:18px;
-  right:90px;
-  bottom:22px;
+  left:15px;
+  bottom:18px;
+  width:calc(100% - 90px);
+  z-index:5;
 }
 
-.video-info h2{
-  font-size:19px;
-  margin-bottom:7px;
+.creator{
+  font-weight:bold;
+  font-size:17px;
+  margin-bottom:8px;
 }
 
-.video-info p{
+.creator span{
+  color:var(--gold);
+}
+
+.video-title{
+  font-size:15px;
+  line-height:1.4;
+  margin-bottom:8px;
+}
+
+.video-tags{
   color:#ddd;
-  line-height:1.5;
-  font-size:14px;
+  font-size:13px;
 }
 
 .actions{
@@ -172,318 +243,479 @@ body{
   bottom:20px;
   display:flex;
   flex-direction:column;
-  gap:12px;
+  align-items:center;
+  gap:17px;
+  z-index:10;
 }
 
 .action{
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  background:rgba(0,0,0,.65);
-  border:1px solid #555;
+  background:none;
   color:white;
-  font-size:21px;
-  cursor:pointer;
+  text-align:center;
+  font-size:12px;
 }
 
-.action.liked{
-  color:#ff3867;
+.action-icon{
+  width:47px;
+  height:47px;
+  border-radius:50%;
+  background:rgba(20,20,20,.8);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:23px;
+  margin-bottom:4px;
 }
 
-/* PAGE HEAD */
-.page-head{
-  margin-bottom:20px;
+.action.liked .action-icon{
+  color:var(--red);
 }
 
-.page-head h2{
-  font-size:28px;
-}
-
-.page-head p{
-  color:#999;
-  margin-top:5px;
+.follow-mini{
+  background:var(--gold);
+  color:#000;
+  font-weight:bold;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
 }
 
 /* SEARCH */
+
 .search-box{
-  width:100%;
   padding:15px;
-  border-radius:14px;
-  background:#151515;
-  border:1px solid #383838;
+  display:flex;
+  gap:8px;
+}
+
+.search-box input{
+  flex:1;
+  background:#171717;
+  border:1px solid #292929;
   color:white;
-  font-size:16px;
+  padding:14px;
+  border-radius:14px;
   outline:none;
 }
 
-.search-box:focus{
-  border-color:#dcae29;
-}
-
-.search-result{
-  padding:16px;
-  margin-top:10px;
+.search-box button{
+  width:50px;
   border-radius:14px;
-  background:#141414;
-  border:1px solid #292929;
+  background:var(--gold);
+  font-size:20px;
 }
 
-/* UPLOAD */
-.upload-area{
-  min-height:220px;
+.search-results{
+  padding:0 15px;
+}
+
+.result{
+  background:#151515;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:10px;
   display:flex;
-  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+.result-thumb{
+  width:70px;
+  height:70px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#5d4300,#111);
+  display:flex;
   align-items:center;
   justify-content:center;
-  gap:9px;
-  border:2px dashed #555;
-  border-radius:18px;
-  cursor:pointer;
-  background:#111;
-  margin-bottom:18px;
+  font-size:25px;
 }
 
-.upload-area:hover{
-  border-color:#dcae29;
+/* CREATE */
+
+.create-page{
+  padding:20px;
 }
 
-.upload-plus{
-  color:#e0b32d;
-  font-size:55px;
-}
-
-.upload-area span{
-  color:#999;
-  font-size:13px;
-}
-
-.primary{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:14px;
-  background:linear-gradient(90deg,#b87e08,#f4cf55);
-  color:#080808;
+.section-title{
+  font-size:25px;
   font-weight:900;
-  font-size:16px;
-  cursor:pointer;
+  margin-bottom:7px;
 }
 
-.primary:disabled{
-  opacity:.4;
-  cursor:not-allowed;
+.section-subtitle{
+  color:#888;
+  margin-bottom:20px;
+}
+
+.upload-box{
+  border:2px dashed #4b3b12;
+  background:#121212;
+  border-radius:20px;
+  padding:35px 20px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.upload-icon{
+  font-size:50px;
+  margin-bottom:12px;
+}
+
+.gold-btn{
+  background:var(--gold);
+  color:#000;
+  padding:14px 22px;
+  border-radius:13px;
+  font-weight:900;
+  font-size:15px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  color:#aaa;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  background:#151515;
+  border:1px solid #292929;
+  color:white;
+  padding:14px;
+  border-radius:12px;
+  outline:none;
+}
+
+.form-group textarea{
+  height:100px;
+  resize:none;
 }
 
 .preview{
-  margin-bottom:15px;
-}
-
-.preview video{
   width:100%;
-  max-height:400px;
+  height:280px;
+  object-fit:cover;
   border-radius:15px;
+  margin-bottom:15px;
+  display:none;
+  background:#111;
 }
 
 /* MONETIZATION */
-.earn-card{
-  background:#131313;
-  border:1px solid #333;
-  border-radius:20px;
+
+.money-page{
   padding:20px;
+}
+
+.earning-card{
+  background:
+    linear-gradient(135deg,#261d05,#111);
+  border:1px solid #5b4510;
+  border-radius:22px;
+  padding:22px;
   margin-bottom:15px;
 }
 
-.status{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:25px;
+.earning-label{
+  color:#aaa;
+  font-size:13px;
 }
 
-.status span{
-  color:#999;
+.earning-value{
+  font-size:38px;
+  font-weight:900;
+  margin:7px 0;
+  color:var(--gold);
 }
 
-.status strong{
-  color:#e4bd43;
-}
-
-.progress-label{
-  display:flex;
-  justify-content:space-between;
-  color:#bbb;
-  font-size:14px;
-  margin:10px 0 7px;
-}
-
-.progress{
-  width:100%;
-  height:10px;
-  background:#292929;
+.money-status{
+  padding:7px 11px;
+  display:inline-block;
   border-radius:20px;
-  overflow:hidden;
-  margin-bottom:18px;
+  background:#242424;
+  color:#aaa;
+  font-size:12px;
 }
 
-.progress-bar{
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#b77d00,#ffe37c);
-  border-radius:20px;
-  transition:.5s;
+.money-status.ready{
+  background:#153d20;
+  color:#65e68b;
 }
 
 .stats{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(2,1fr);
   gap:10px;
+  margin-bottom:15px;
 }
 
 .stat{
-  padding:18px;
-  border-radius:16px;
-  background:#141414;
-  border:1px solid #292929;
+  background:#151515;
+  border-radius:17px;
+  padding:17px;
 }
 
-.stat span{
-  display:block;
+.stat-number{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.stat-label{
   color:#888;
   font-size:12px;
-}
-
-.stat strong{
-  display:block;
-  font-size:22px;
-  margin-top:7px;
-  color:#f2c64b;
-}
-
-.info{
-  margin-top:15px;
-  padding:18px;
-  border-radius:16px;
-  background:#111;
-  border:1px solid #292929;
-  color:#bbb;
-  line-height:1.6;
-}
-
-/* PROFILE */
-.profile{
-  text-align:center;
-  background:#131313;
-  border:1px solid #292929;
-  border-radius:20px;
-  padding:30px 15px;
-}
-
-.profile-logo{
-  font-size:70px;
-  margin-bottom:10px;
-  filter:drop-shadow(0 0 12px #dcae29);
-}
-
-.profile h2{
-  color:#f1c54b;
-}
-
-.profile p{
-  color:#888;
   margin-top:5px;
 }
 
-.profile-stats{
+.progress-card{
+  background:#151515;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:15px;
+}
+
+.progress-row{
   display:flex;
-  justify-content:space-around;
-  margin-top:25px;
+  justify-content:space-between;
+  margin-bottom:9px;
+  font-size:13px;
 }
 
-.profile-stats strong{
-  display:block;
-  font-size:21px;
+.progress-bg{
+  height:10px;
+  background:#292929;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:18px;
 }
 
-.profile-stats span{
-  color:#888;
-  font-size:12px;
+.progress{
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  width:0%;
+  border-radius:10px;
 }
 
-.secondary{
-  width:100%;
+.notice{
   padding:14px;
-  margin-top:10px;
-  background:#171717;
+  background:#191919;
+  border-left:3px solid var(--gold);
+  color:#aaa;
+  font-size:13px;
+  line-height:1.5;
+  border-radius:8px;
+}
+
+/* PROFILE */
+
+.profile{
+  padding:20px;
+}
+
+.profile-head{
+  text-align:center;
+  padding:10px 0 20px;
+}
+
+.avatar{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 35%,#f5c542 0 12%,transparent 13%),
+    linear-gradient(145deg,#3c2b00,#111);
+  border:3px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:35px;
+  margin:0 auto 12px;
+}
+
+.username{
+  font-size:22px;
+  font-weight:900;
+}
+
+.handle{
+  color:#888;
+  margin-top:4px;
+}
+
+.profile-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  background:#151515;
+  border-radius:17px;
+  padding:17px 5px;
+  margin:15px 0;
+}
+
+.pstat{
+  text-align:center;
+  border-right:1px solid #292929;
+}
+
+.pstat:last-child{
+  border:0;
+}
+
+.pstat strong{
+  display:block;
+  font-size:19px;
+}
+
+.pstat span{
+  color:#888;
+  font-size:11px;
+}
+
+.profile-btn{
+  width:100%;
+  padding:13px;
+  background:#181818;
   color:white;
   border:1px solid #333;
-  border-radius:13px;
-  cursor:pointer;
+  border-radius:12px;
+  margin-bottom:10px;
+  font-weight:bold;
 }
 
 /* BOTTOM NAV */
+
 .bottom-nav{
   position:fixed;
   bottom:0;
-  left:0;
-  right:0;
-  height:70px;
-  z-index:200;
-  display:flex;
-  background:rgba(5,5,5,.98);
-  border-top:1px solid #292929;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  height:72px;
+  background:rgba(5,5,5,.96);
+  backdrop-filter:blur(15px);
+  border-top:1px solid #252525;
+  z-index:100;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
 }
 
-.nav{
-  flex:1;
-  border:0;
-  background:transparent;
+.nav-btn{
+  background:none;
   color:#777;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  gap:3px;
-  cursor:pointer;
+  gap:5px;
+  font-size:11px;
 }
 
-.nav span{
+.nav-icon{
   font-size:22px;
 }
 
-.nav small{
-  font-size:10px;
+.nav-btn.active{
+  color:var(--gold);
 }
 
-.nav.active{
-  color:#f2c64b;
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:300;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
 }
 
-.create-button{
-  color:#050505 !important;
+.modal.show{
+  display:flex;
 }
 
-.create-button span{
-  background:#e0b22d;
-  border-radius:10px;
-  padding:2px 13px;
-  font-size:26px !important;
+.modal-content{
+  width:100%;
+  max-width:520px;
+  background:#151515;
+  border-radius:25px 25px 0 0;
+  padding:20px;
+  max-height:75vh;
+  overflow:auto;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.close{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:#292929;
+  color:white;
+}
+
+.comment{
+  padding:12px 0;
+  border-bottom:1px solid #292929;
+}
+
+.comment-user{
+  font-weight:bold;
+  margin-bottom:4px;
+}
+
+.comment-text{
+  color:#bbb;
+}
+
+.comment-input{
+  display:flex;
+  gap:8px;
+  margin-top:15px;
+}
+
+.comment-input input{
+  flex:1;
+  background:#222;
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:13px;
+  outline:none;
+}
+
+.comment-input button{
+  width:48px;
+  border-radius:12px;
+  background:var(--gold);
 }
 
 /* TOAST */
+
 .toast{
   position:fixed;
-  z-index:500;
-  bottom:85px;
   left:50%;
+  bottom:90px;
   transform:translate(-50%,20px);
-  background:#efc64c;
-  color:#080808;
-  padding:11px 18px;
+  background:#222;
+  color:white;
+  padding:12px 17px;
   border-radius:12px;
-  font-weight:bold;
   opacity:0;
   pointer-events:none;
-  transition:.25s;
+  transition:.3s;
+  z-index:500;
+  white-space:nowrap;
 }
 
 .toast.show{
@@ -491,17 +723,15 @@ body{
   transform:translate(-50%,0);
 }
 
+/* DESKTOP */
+
 @media(min-width:700px){
-  .bottom-nav{
-    width:700px;
-    left:50%;
-    right:auto;
-    transform:translateX(-50%);
-    border-radius:18px 18px 0 0;
+  body{
+    background:#020202;
   }
 
-  .video{
-    height:680px;
+  .app{
+    box-shadow:0 0 50px rgba(0,0,0,.7);
   }
 }
 </style>
@@ -509,201 +739,295 @@ body{
 
 <body>
 
-<!-- TOP BAR -->
-<header class="topbar">
+<div class="app">
 
-  <div class="logo">
-    <div class="logo-crown">♛</div>
-    <div class="logo-text">ROYAL CLIPS</div>
+<!-- TOP BAR -->
+
+<header class="topbar">
+  <div class="brand">
+    <img
+      class="brand-logo"
+      src="assets/royal-clips-logo.png"
+      onload="this.style.display='block';document.querySelector('.crown').style.display='none'"
+      onerror="this.style.display='none'"
+    >
+
+    <div class="crown">♛</div>
+
+    <div class="brand-text">
+      ROYAL <span>CLIPS</span>
+    </div>
   </div>
 
-  <button class="profile-button" onclick="openScreen('profile')">
-    👤
-  </button>
-
+  <button class="top-btn" onclick="showSearch()">⌕</button>
 </header>
 
 
 <!-- HOME -->
-<section id="home" class="screen active">
 
-  <div class="feed-title">
-    <div>
-      <h1>For You</h1>
-      <p>Watch • Create • Earn</p>
-    </div>
+<section id="homeScreen" class="screen active">
+
+  <div class="feed-tabs">
+    <button class="active" onclick="changeFeed(this,'forYou')">
+      For You
+    </button>
+
+    <button onclick="changeFeed(this,'following')">
+      Following
+    </button>
   </div>
 
-  <div id="videoFeed" class="video-feed"></div>
+  <div id="feed" class="feed"></div>
 
 </section>
 
 
 <!-- SEARCH -->
-<section id="search" class="screen">
 
-  <div class="page-head">
-    <h2>Search</h2>
-    <p>Find creators and clips</p>
+<section id="searchScreen" class="screen">
+
+  <div class="search-box">
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search creators or videos..."
+      oninput="searchVideos()"
+    >
+
+    <button onclick="searchVideos()">⌕</button>
   </div>
 
-  <input
-    id="searchInput"
-    class="search-box"
-    type="text"
-    placeholder="Search Royal Clips..."
-  >
-
-  <div id="searchResults"></div>
+  <div id="searchResults" class="search-results"></div>
 
 </section>
 
 
-<!-- UPLOAD -->
-<section id="upload" class="screen">
+<!-- CREATE -->
 
-  <div class="page-head">
-    <h2>Create a Clip</h2>
-    <p>Upload your short video</p>
+<section id="createScreen" class="screen">
+
+  <div class="create-page">
+
+    <div class="section-title">
+      Create a Clip
+    </div>
+
+    <div class="section-subtitle">
+      Upload your video and share it with Royal Clips.
+    </div>
+
+    <div class="upload-box">
+
+      <div class="upload-icon">🎬</div>
+
+      <p style="color:#aaa;margin-bottom:15px">
+        Select a video from your device
+      </p>
+
+      <input
+        id="videoInput"
+        type="file"
+        accept="video/*"
+        hidden
+        onchange="previewVideo(event)"
+      >
+
+      <button
+        class="gold-btn"
+        onclick="document.getElementById('videoInput').click()"
+      >
+        Choose Video
+      </button>
+
+    </div>
+
+    <video
+      id="preview"
+      class="preview"
+      controls
+    ></video>
+
+    <div class="form-group">
+      <label>Video title</label>
+
+      <input
+        id="videoTitle"
+        placeholder="Enter your video title"
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+
+      <textarea
+        id="videoDescription"
+        placeholder="Tell people about your video..."
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Hashtags</label>
+
+      <input
+        id="videoTags"
+        placeholder="#viral #fun #royalclips"
+      >
+    </div>
+
+    <button
+      class="gold-btn"
+      style="width:100%"
+      onclick="publishVideo()"
+    >
+      🚀 Publish Clip
+    </button>
+
   </div>
-
-  <label class="upload-area" for="videoInput">
-
-    <div class="upload-plus">＋</div>
-
-    <strong>Select Video</strong>
-
-    <span>MP4, WebM and other browser-supported formats</span>
-
-  </label>
-
-  <input
-    id="videoInput"
-    type="file"
-    accept="video/*"
-    hidden
-  >
-
-  <div id="preview" class="preview"></div>
-
-  <button
-    id="publishButton"
-    class="primary"
-    disabled
-  >
-    Publish Clip
-  </button>
 
 </section>
 
 
 <!-- MONETIZATION -->
-<section id="earn" class="screen">
 
-  <div class="page-head">
-    <h2>Monetization</h2>
-    <p>Royal Clips Creator Program</p>
-  </div>
+<section id="moneyScreen" class="screen">
+
+  <div class="money-page">
+
+    <div class="section-title">
+      Creator Monetization
+    </div>
+
+    <div class="section-subtitle">
+      Track your eligibility and creator progress.
+    </div>
 
 
-  <div class="earn-card">
+    <div class="earning-card">
 
-    <div class="status">
+      <div class="earning-label">
+        Estimated Balance
+      </div>
 
-      <span>Status</span>
+      <div class="earning-value">
+        $<span id="balance">0.00</span>
+      </div>
 
-      <strong id="eligibility">
-        NOT ELIGIBLE
+      <span
+        id="moneyStatus"
+        class="money-status"
+      >
+        Not eligible
+      </span>
+
+    </div>
+
+
+    <div class="stats">
+
+      <div class="stat">
+        <div
+          id="followersStat"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Followers
+        </div>
+      </div>
+
+      <div class="stat">
+        <div
+          id="viewsStat"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          3-Month Views
+        </div>
+      </div>
+
+      <div class="stat">
+        <div
+          id="likesStat"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Likes
+        </div>
+      </div>
+
+      <div class="stat">
+        <div
+          id="followingStat"
+          class="stat-number"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Following
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="progress-card">
+
+      <div class="progress-row">
+        <span>Followers requirement</span>
+        <strong id="followersProgressText">0 / 100</strong>
+      </div>
+
+      <div class="progress-bg">
+        <div
+          id="followersProgress"
+          class="progress"
+        ></div>
+      </div>
+
+
+      <div class="progress-row">
+        <span>Eligible views</span>
+        <strong id="viewsProgressText">0 / 10,000</strong>
+      </div>
+
+      <div class="progress-bg">
+        <div
+          id="viewsProgress"
+          class="progress"
+        ></div>
+      </div>
+
+    </div>
+
+
+    <div class="notice">
+      <strong style="color:white">
+        Royal Clips rule:
       </strong>
 
+      A creator becomes eligible when they reach
+      <strong style="color:#f5c542">
+        100 followers
+      </strong>
+      and
+      <strong style="color:#f5c542">
+        10,000 eligible views
+      </strong>
+      during the previous 3 months.
+      <br><br>
+
+      This demo does not connect to a real advertising network.
+      Real payments require a backend, payment system and supported ad network.
     </div>
-
-
-    <div class="progress-label">
-
-      <span>Followers</span>
-
-      <span>
-        <b id="followers">0</b> / 100
-      </span>
-
-    </div>
-
-    <div class="progress">
-      <div
-        id="followersBar"
-        class="progress-bar"
-      ></div>
-    </div>
-
-
-    <div class="progress-label">
-
-      <span>3-Month Views</span>
-
-      <span>
-        <b id="views">0</b> / 10,000
-      </span>
-
-    </div>
-
-    <div class="progress">
-      <div
-        id="viewsBar"
-        class="progress-bar"
-      ></div>
-    </div>
-
-  </div>
-
-
-  <div class="stats">
-
-    <div class="stat">
-      <span>Estimated Earnings</span>
-      <strong id="earnings">$0.00</strong>
-    </div>
-
-    <div class="stat">
-      <span>Balance</span>
-      <strong id="balance">$0.00</strong>
-    </div>
-
-    <div class="stat">
-      <span>Monthly Views</span>
-      <strong id="monthlyViews">0</strong>
-    </div>
-
-    <div class="stat">
-      <span>Likes</span>
-      <strong id="likes">0</strong>
-    </div>
-
-  </div>
-
-
-  <div class="info">
-
-    <strong>Creator eligibility</strong>
-
-    <br><br>
-
-    A creator becomes eligible when both conditions
-    are reached:
-
-    <br><br>
-
-    👥 <b>100 followers</b>
-
-    <br>
-
-    👁️ <b>10,000 eligible views during the previous 3 months</b>
-
-    <br><br>
-
-    Actual advertising revenue requires a real
-    advertising account, approved traffic, backend
-    revenue tracking and a valid payout system.
 
   </div>
 
@@ -711,330 +1035,422 @@ body{
 
 
 <!-- PROFILE -->
-<section id="profile" class="screen">
+
+<section id="profileScreen" class="screen">
 
   <div class="profile">
 
-    <div class="profile-logo">
-      ♛
+    <div class="profile-head">
+
+      <div class="avatar">
+        👑
+      </div>
+
+      <div class="username">
+        Royal Creator
+      </div>
+
+      <div class="handle">
+        @royalcreator
+      </div>
+
     </div>
-
-    <h2 id="profileName">
-      Royal Creator
-    </h2>
-
-    <p>
-      @royalcreator
-    </p>
 
 
     <div class="profile-stats">
 
-      <div>
+      <div class="pstat">
         <strong id="profileFollowers">0</strong>
         <span>Followers</span>
       </div>
 
-      <div>
-        <strong>0</strong>
+      <div class="pstat">
+        <strong id="profileFollowing">0</strong>
         <span>Following</span>
       </div>
 
-      <div>
+      <div class="pstat">
         <strong id="profileLikes">0</strong>
         <span>Likes</span>
       </div>
 
     </div>
 
+
+    <button
+      class="profile-btn"
+      onclick="addDemoFollowers()"
+    >
+      ➕ Add Demo Followers
+    </button>
+
+    <button
+      class="profile-btn"
+      onclick="addDemoViews()"
+    >
+      👁 Add Demo Views
+    </button>
+
+    <button
+      class="profile-btn"
+      onclick="resetData()"
+    >
+      ♻ Reset Demo Data
+    </button>
+
+
+    <div
+      style="
+        background:#151515;
+        padding:18px;
+        border-radius:17px;
+        margin-top:15px;
+        line-height:1.6;
+        color:#aaa;
+        font-size:13px;
+      "
+    >
+      <strong style="color:white">
+        Royal Clips V2
+      </strong>
+      <br><br>
+
+      This version includes:
+      <br>
+      ✓ TikTok-style vertical feed
+      <br>
+      ✓ Video upload
+      <br>
+      ✓ Video preview
+      <br>
+      ✓ Likes
+      <br>
+      ✓ Comments
+      <br>
+      ✓ Sharing
+      <br>
+      ✓ Search
+      <br>
+      ✓ Creator profile
+      <br>
+      ✓ Monetization dashboard
+      <br>
+      ✓ 100 followers + 10K views requirement
+      <br>
+      ✓ Local browser storage
+      <br>
+      ✓ Mobile responsive design
+    </div>
+
   </div>
-
-
-  <button
-    class="secondary"
-    onclick="editProfile()"
-  >
-    Edit Profile
-  </button>
-
-
-  <button
-    class="secondary"
-    onclick="demoProgress()"
-  >
-    Demo: Add 10 Followers + 500 Views
-  </button>
 
 </section>
 
 
-<!-- NAVIGATION -->
+<!-- BOTTOM NAV -->
+
 <nav class="bottom-nav">
 
   <button
-    class="nav active"
-    data-screen="home"
-    onclick="openScreen('home')"
+    class="nav-btn active"
+    onclick="openScreen('homeScreen',this)"
   >
-    <span>⌂</span>
-    <small>Home</small>
+    <span class="nav-icon">⌂</span>
+    Home
   </button>
 
-
   <button
-    class="nav"
-    data-screen="search"
-    onclick="openScreen('search')"
+    class="nav-btn"
+    onclick="openScreen('searchScreen',this)"
   >
-    <span>⌕</span>
-    <small>Search</small>
+    <span class="nav-icon">⌕</span>
+    Discover
   </button>
 
-
   <button
-    class="nav create-button"
-    data-screen="upload"
-    onclick="openScreen('upload')"
+    class="nav-btn"
+    onclick="openScreen('createScreen',this)"
   >
-    <span>＋</span>
-    <small>Create</small>
+    <span class="nav-icon">＋</span>
+    Create
   </button>
 
-
   <button
-    class="nav"
-    data-screen="earn"
-    onclick="openScreen('earn')"
+    class="nav-btn"
+    onclick="openScreen('moneyScreen',this)"
   >
-    <span>♛</span>
-    <small>Earn</small>
+    <span class="nav-icon">♛</span>
+    Earn
   </button>
 
-
   <button
-    class="nav"
-    data-screen="profile"
-    onclick="openScreen('profile')"
+    class="nav-btn"
+    onclick="openScreen('profileScreen',this)"
   >
-    <span>◉</span>
-    <small>Profile</small>
+    <span class="nav-icon">◉</span>
+    Profile
   </button>
 
 </nav>
 
 
-<div id="toast" class="toast"></div>
+<!-- COMMENT MODAL -->
+
+<div
+  id="commentModal"
+  class="modal"
+  onclick="closeCommentOutside(event)"
+>
+
+  <div class="modal-content">
+
+    <div class="modal-head">
+
+      <strong>
+        Comments
+      </strong>
+
+      <button
+        class="close"
+        onclick="closeComments()"
+      >
+        ✕
+      </button>
+
+    </div>
+
+    <div id="commentsList"></div>
+
+    <div class="comment-input">
+
+      <input
+        id="commentInput"
+        placeholder="Write a comment..."
+      >
+
+      <button onclick="addComment()">
+        ➤
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+>
+  Done
+</div>
+
+</div>
 
 
 <script>
 
-/* ==============================
-   ROYAL CLIPS DATA
-================================ */
+/* =========================
+   APP DATA
+========================= */
 
-let royalClips =
-JSON.parse(
-  localStorage.getItem("royalClips")
+let state = JSON.parse(
+  localStorage.getItem("royalClipsV2")
 ) || {
 
-  followers:0,
+  followers: 0,
 
-  views:0,
+  views3m: 0,
 
-  monthlyViews:0,
+  likes: 0,
 
-  likes:0,
+  following: 0,
 
-  earnings:0,
+  balance: 0,
 
-  balance:0,
+  videos: [
 
-  name:"Royal Creator",
+    {
+      id:1,
+      creator:"Royal Clips",
+      handle:"@royalclips",
+      title:"Welcome to ROYAL CLIPS 👑",
+      description:"The new place for amazing short videos.",
+      tags:"#royalclips #shorts",
+      likes:120,
+      comments:[
+        {
+          user:"Alex",
+          text:"Welcome!"
+        },
+        {
+          user:"Sara",
+          text:"Looks amazing 🔥"
+        }
+      ],
+      following:false,
+      demo:true
+    },
 
-  customVideos:[]
+    {
+      id:2,
+      creator:"Crazy Creator",
+      handle:"@crazycreator",
+      title:"Wait until the end 😱",
+      description:"Something unexpected happened.",
+      tags:"#viral #wow",
+      likes:250,
+      comments:[
+        {
+          user:"Mike",
+          text:"No way 😱"
+        }
+      ],
+      following:false,
+      demo:true
+    },
+
+    {
+      id:3,
+      creator:"Daily Wonder",
+      handle:"@dailywonder",
+      title:"3 facts you probably didn't know 🤯",
+      description:"Interesting facts every day.",
+      tags:"#facts #knowledge",
+      likes:390,
+      comments:[],
+      following:false,
+      demo:true
+    }
+
+  ]
 
 };
 
+let currentCommentVideo = null;
 
-/* ==============================
-   SAVE DATA
-================================ */
+let selectedVideoFile = null;
 
-function saveData(){
+let selectedVideoURL = null;
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveState(){
 
   localStorage.setItem(
-    "royalClips",
-    JSON.stringify(royalClips)
+    "royalClipsV2",
+    JSON.stringify(state)
   );
 
 }
 
 
-/* ==============================
-   TOAST
-================================ */
+/* =========================
+   NAVIGATION
+========================= */
 
-function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.innerText = message;
-
-  toast.classList.add("show");
-
-  setTimeout(function(){
-
-    toast.classList.remove("show");
-
-  },2200);
-
-}
-
-
-/* ==============================
-   SCREEN NAVIGATION
-================================ */
-
-function openScreen(screen){
+function openScreen(id,button){
 
   document
     .querySelectorAll(".screen")
-    .forEach(function(item){
-
-      item.classList.remove("active");
-
+    .forEach(screen=>{
+      screen.classList.remove("active");
     });
 
-
   document
-    .getElementById(screen)
+    .getElementById(id)
     .classList.add("active");
 
-
   document
-    .querySelectorAll(".nav")
-    .forEach(function(item){
-
-      item.classList.remove("active");
-
+    .querySelectorAll(".nav-btn")
+    .forEach(btn=>{
+      btn.classList.remove("active");
     });
 
-
-  const button =
-    document.querySelector(
-      '[data-screen="' +
-      screen +
-      '"]'
-    );
-
   if(button){
-
     button.classList.add("active");
-
   }
 
-
   window.scrollTo(0,0);
+
+  if(id==="homeScreen"){
+    renderFeed();
+  }
+
+  if(id==="moneyScreen"){
+    updateMoney();
+  }
+
+  if(id==="profileScreen"){
+    updateProfile();
+  }
 
 }
 
 
-/* ==============================
-   DEMO VIDEOS
-================================ */
+/* =========================
+   FEED
+========================= */
 
-let videos = [
-
-  {
-    id:1,
-    user:"@royalcreator",
-    title:"Welcome to Royal Clips 👑",
-    description:"Watch, create and earn.",
-    views:1250,
-    liked:false
-  },
-
-  {
-    id:2,
-    user:"@travelking",
-    title:"Beautiful Sunset 🌅",
-    description:"Amazing moments from around the world.",
-    views:850,
-    liked:false
-  },
-
-  {
-    id:3,
-    user:"@foodqueen",
-    title:"Amazing Food 🍔",
-    description:"Quick food video for everyone.",
-    views:1640,
-    liked:false
-  },
-
-  {
-    id:4,
-    user:"@discover",
-    title:"Amazing World 🌎",
-    description:"Interesting places and facts.",
-    views:2140,
-    liked:false
-  }
-
-];
-
-
-videos =
-videos.concat(
-  royalClips.customVideos
-);
-
-
-/* ==============================
-   RENDER VIDEOS
-================================ */
-
-function renderVideos(){
+function renderFeed(){
 
   const feed =
-    document.getElementById("videoFeed");
+    document.getElementById("feed");
 
+  feed.innerHTML="";
 
-  feed.innerHTML = "";
-
-
-  videos.forEach(function(video){
+  state.videos.forEach(video=>{
 
     const card =
       document.createElement("article");
 
+    card.className="video-card";
 
-    card.className = "video";
+    card.innerHTML=`
 
+      <div class="video-bg"></div>
 
-    card.innerHTML = `
-
-      <div class="video-background">
-        ▶
-      </div>
+      ${
+        video.videoURL
+        ?
+        `
+        <video
+          class="real-video"
+          src="${video.videoURL}"
+          controls
+          playsinline
+        ></video>
+        `
+        :
+        `
+        <div class="demo-play">
+          ▶
+        </div>
+        `
+      }
 
       <div class="video-overlay"></div>
 
       <div class="video-info">
 
-        <h2>
-          ${escapeHTML(video.title)}
-        </h2>
+        <div class="creator">
+          ${escapeHTML(video.creator)}
+          <span>
+            ✓
+          </span>
+        </div>
 
-        <p>
-          ${escapeHTML(video.user)}
-          •
-          ${Number(video.views).toLocaleString()}
-          views
-          <br>
-          ${escapeHTML(video.description)}
-        </p>
+        <div class="video-title">
+          ${escapeHTML(video.title)}
+        </div>
+
+        <div class="video-tags">
+          ${escapeHTML(video.tags || "#royalclips")}
+        </div>
 
       </div>
 
@@ -1042,34 +1458,68 @@ function renderVideos(){
       <div class="actions">
 
         <button
-          class="action ${
-            video.liked ? "liked" : ""
-          }"
-          onclick="likeVideo(${video.id})"
+          class="action ${video.liked ? "liked":""}"
+          onclick="likeVideo(${video.id},this)"
         >
-          ♥
+          <div class="action-icon">
+            ♥
+          </div>
+
+          <span>
+            ${formatNumber(video.likes)}
+          </span>
+
         </button>
 
 
         <button
           class="action"
-          onclick="commentVideo()"
+          onclick="openComments(${video.id})"
         >
-          💬
+          <div class="action-icon">
+            💬
+          </div>
+
+          <span>
+            ${video.comments.length}
+          </span>
+
         </button>
 
 
         <button
           class="action"
-          onclick="shareVideo()"
+          onclick="shareVideo(${video.id})"
         >
-          ↗
+          <div class="action-icon">
+            ↗
+          </div>
+
+          <span>
+            Share
+          </span>
+
+        </button>
+
+
+        <button
+          class="action"
+          onclick="followCreator(${video.id},this)"
+        >
+
+          <div class="action-icon">
+            ＋
+          </div>
+
+          <span>
+            ${video.following ? "Following":"Follow"}
+          </span>
+
         </button>
 
       </div>
 
     `;
-
 
     feed.appendChild(card);
 
@@ -1078,500 +1528,898 @@ function renderVideos(){
 }
 
 
-/* ==============================
+/* =========================
    LIKE
-================================ */
+========================= */
 
-function likeVideo(id){
+function likeVideo(id,button){
 
   const video =
-    videos.find(function(item){
+    state.videos.find(v=>v.id===id);
 
-      return item.id === id;
-
-    });
-
-
-  if(!video)return;
-
-
-  video.liked =
-    !video.liked;
-
+  if(!video) return;
 
   if(video.liked){
 
-    royalClips.likes++;
+    video.liked=false;
+
+    video.likes--;
+
+    state.likes--;
 
   }else{
 
-    royalClips.likes--;
+    video.liked=true;
+
+    video.likes++;
+
+    state.likes++;
 
   }
 
+  saveState();
 
-  saveData();
+  renderFeed();
 
-  renderVideos();
-
-  updateDashboard();
-
-}
-
-
-/* ==============================
-   COMMENT
-================================ */
-
-function commentVideo(){
-
-  showToast(
-    "Comments will connect to the backend in V2."
-  );
+  updateProfile();
 
 }
 
 
-/* ==============================
+/* =========================
+   FOLLOW
+========================= */
+
+function followCreator(id){
+
+  const video =
+    state.videos.find(v=>v.id===id);
+
+  if(!video) return;
+
+  if(video.following){
+
+    video.following=false;
+
+    state.following--;
+
+  }else{
+
+    video.following=true;
+
+    state.following++;
+
+  }
+
+  saveState();
+
+  renderFeed();
+
+  updateProfile();
+
+}
+
+
+/* =========================
+   COMMENTS
+========================= */
+
+function openComments(id){
+
+  currentCommentVideo=id;
+
+  const video =
+    state.videos.find(v=>v.id===id);
+
+  if(!video) return;
+
+  renderComments();
+
+  document
+    .getElementById("commentModal")
+    .classList.add("show");
+
+}
+
+
+function renderComments(){
+
+  const video =
+    state.videos.find(
+      v=>v.id===currentCommentVideo
+    );
+
+  if(!video) return;
+
+  const list =
+    document.getElementById("commentsList");
+
+  if(video.comments.length===0){
+
+    list.innerHTML=`
+      <div
+        style="
+          text-align:center;
+          padding:30px;
+          color:#777;
+        "
+      >
+        No comments yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  list.innerHTML =
+    video.comments.map(comment=>`
+
+      <div class="comment">
+
+        <div class="comment-user">
+          ${escapeHTML(comment.user)}
+        </div>
+
+        <div class="comment-text">
+          ${escapeHTML(comment.text)}
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function addComment(){
+
+  const input =
+    document.getElementById("commentInput");
+
+  const text =
+    input.value.trim();
+
+  if(!text) return;
+
+  const video =
+    state.videos.find(
+      v=>v.id===currentCommentVideo
+    );
+
+  if(!video) return;
+
+  video.comments.push({
+
+    user:"You",
+
+    text:text
+
+  });
+
+  input.value="";
+
+  saveState();
+
+  renderComments();
+
+  renderFeed();
+
+}
+
+
+function closeComments(){
+
+  document
+    .getElementById("commentModal")
+    .classList.remove("show");
+
+}
+
+
+function closeCommentOutside(event){
+
+  if(event.target.id==="commentModal"){
+    closeComments();
+  }
+
+}
+
+
+/* =========================
    SHARE
-================================ */
+========================= */
 
-function shareVideo(){
+function shareVideo(id){
 
-  if(
-    navigator.share
-  ){
+  const video =
+    state.videos.find(v=>v.id===id);
+
+  if(!video) return;
+
+  const text =
+    video.title + " — ROYAL CLIPS";
+
+  if(navigator.share){
 
     navigator.share({
 
-      title:"Royal Clips",
+      title:"ROYAL CLIPS",
 
-      text:"Check this Royal Clips video!"
+      text:text,
 
-    });
+      url:location.href
+
+    }).catch(()=>{});
 
   }else{
 
-    navigator.clipboard.writeText(
-      window.location.href
-    );
-
-    showToast(
-      "Royal Clips link copied!"
-    );
+    navigator.clipboard
+      .writeText(text)
+      .then(()=>{
+        showToast("Video info copied!");
+      });
 
   }
 
 }
 
 
-/* ==============================
-   UPLOAD
-================================ */
+/* =========================
+   SEARCH
+========================= */
 
-const videoInput =
-  document.getElementById(
-    "videoInput"
-  );
+function showSearch(){
 
+  const btn =
+    document.querySelectorAll(".nav-btn")[1];
 
-const publishButton =
-  document.getElementById(
-    "publishButton"
-  );
+  openScreen("searchScreen",btn);
 
+  setTimeout(()=>{
 
-videoInput.addEventListener(
-  "change",
-  function(event){
+    document
+      .getElementById("searchInput")
+      .focus();
 
-    const file =
-      event.target.files[0];
+  },100);
+
+}
 
 
-    if(!file)return;
+function searchVideos(){
 
+  const query =
+    document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase()
+      .trim();
 
-    const url =
-      URL.createObjectURL(file);
+  const results =
+    document.getElementById("searchResults");
 
+  const filtered =
+    state.videos.filter(video=>
 
-    document.getElementById(
-      "preview"
-    ).innerHTML = `
+      video.title.toLowerCase().includes(query) ||
 
-      <video
-        src="${url}"
-        controls
-      ></video>
+      video.creator.toLowerCase().includes(query) ||
 
-    `;
+      video.tags.toLowerCase().includes(query)
 
-
-    publishButton.disabled =
-      false;
-
-
-    publishButton.dataset.video =
-      file.name;
-
-  }
-);
-
-
-/* ==============================
-   PUBLISH
-================================ */
-
-publishButton.addEventListener(
-  "click",
-  function(){
-
-    const title =
-      publishButton.dataset.video
-      ||
-      "My Royal Clip";
-
-
-    const newVideo = {
-
-      id:Date.now(),
-
-      user:
-        "@"+
-        royalClips.name
-          .toLowerCase()
-          .replace(/\s+/g,""),
-
-      title:title,
-
-      description:
-        "New Royal Clips video",
-
-      views:0,
-
-      liked:false
-
-    };
-
-
-    royalClips.customVideos
-      .unshift(newVideo);
-
-
-    videos.unshift(newVideo);
-
-
-    saveData();
-
-    renderVideos();
-
-
-    publishButton.disabled =
-      true;
-
-
-    document.getElementById(
-      "preview"
-    ).innerHTML = "";
-
-
-    videoInput.value = "";
-
-
-    showToast(
-      "Clip published!"
     );
 
+  if(filtered.length===0){
 
-    openScreen("home");
+    results.innerHTML=`
+      <div
+        style="
+          text-align:center;
+          padding:40px;
+          color:#777;
+        "
+      >
+        No videos found.
+      </div>
+    `;
+
+    return;
 
   }
-);
+
+  results.innerHTML =
+    filtered.map(video=>`
+
+      <div
+        class="result"
+        onclick="goToVideo(${video.id})"
+      >
+
+        <div class="result-thumb">
+          ▶
+        </div>
+
+        <div>
+
+          <strong>
+            ${escapeHTML(video.title)}
+          </strong>
+
+          <div
+            style="
+              color:#888;
+              font-size:12px;
+              margin-top:5px;
+            "
+          >
+            ${escapeHTML(video.creator)}
+          </div>
+
+          <div
+            style="
+              color:#f5c542;
+              font-size:12px;
+              margin-top:4px;
+            "
+          >
+            ♥ ${formatNumber(video.likes)}
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
 
 
-/* ==============================
-   SEARCH
-================================ */
+function goToVideo(id){
 
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "input",
-    function(event){
+  const homeBtn =
+    document.querySelectorAll(".nav-btn")[0];
 
-      const query =
-        event.target.value
-          .toLowerCase();
+  openScreen("homeScreen",homeBtn);
 
+  setTimeout(()=>{
 
-      const results =
-        videos.filter(
-          function(video){
+    const index =
+      state.videos.findIndex(v=>v.id===id);
 
-            return (
-              video.title
-                .toLowerCase()
-                .includes(query)
-              ||
-              video.user
-                .toLowerCase()
-                .includes(query)
-              ||
-              video.description
-                .toLowerCase()
-                .includes(query)
-            );
+    const cards =
+      document.querySelectorAll(".video-card");
 
-          }
-        );
-
-
-      const resultBox =
-        document.getElementById(
-          "searchResults"
-        );
-
-
-      if(results.length === 0){
-
-        resultBox.innerHTML =
-          "<p style='color:#888;margin-top:20px'>No results found.</p>";
-
-        return;
-
-      }
-
-
-      resultBox.innerHTML =
-        results.map(
-          function(video){
-
-            return `
-
-              <div class="search-result">
-
-                <strong>
-                  ${escapeHTML(video.title)}
-                </strong>
-
-                <br>
-
-                <span style="color:#888">
-                  ${escapeHTML(video.user)}
-                  •
-                  ${video.views}
-                  views
-                </span>
-
-              </div>
-
-            `;
-
-          }
-        ).join("");
-
+    if(cards[index]){
+      cards[index].scrollIntoView({
+        behavior:"smooth"
+      });
     }
-  );
+
+  },100);
+
+}
 
 
-/* ==============================
+/* =========================
+   CREATE VIDEO
+========================= */
+
+function previewVideo(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  selectedVideoFile=file;
+
+  if(selectedVideoURL){
+    URL.revokeObjectURL(selectedVideoURL);
+  }
+
+  selectedVideoURL =
+    URL.createObjectURL(file);
+
+  const preview =
+    document.getElementById("preview");
+
+  preview.src=selectedVideoURL;
+
+  preview.style.display="block";
+
+}
+
+
+function publishVideo(){
+
+  if(!selectedVideoFile){
+
+    showToast("Choose a video first.");
+
+    return;
+
+  }
+
+  const title =
+    document
+      .getElementById("videoTitle")
+      .value
+      .trim();
+
+  const description =
+    document
+      .getElementById("videoDescription")
+      .value
+      .trim();
+
+  const tags =
+    document
+      .getElementById("videoTags")
+      .value
+      .trim();
+
+  if(!title){
+
+    showToast("Enter a video title.");
+
+    return;
+
+  }
+
+  const video={
+
+    id:Date.now(),
+
+    creator:"Royal Creator",
+
+    handle:"@royalcreator",
+
+    title:title,
+
+    description:description,
+
+    tags:tags || "#royalclips",
+
+    likes:0,
+
+    comments:[],
+
+    following:false,
+
+    videoURL:selectedVideoURL
+
+  };
+
+  state.videos.unshift(video);
+
+  saveState();
+
+  document
+    .getElementById("videoTitle")
+    .value="";
+
+  document
+    .getElementById("videoDescription")
+    .value="";
+
+  document
+    .getElementById("videoTags")
+    .value="";
+
+  document
+    .getElementById("videoInput")
+    .value="";
+
+  document
+    .getElementById("preview")
+    .style.display="none";
+
+  selectedVideoFile=null;
+
+  showToast("Clip published!");
+
+  renderFeed();
+
+  const homeBtn =
+    document.querySelectorAll(".nav-btn")[0];
+
+  openScreen("homeScreen",homeBtn);
+
+}
+
+
+/* =========================
    MONETIZATION
-================================ */
+========================= */
 
-function updateDashboard(){
+function updateMoney(){
 
-  document.getElementById(
-    "followers"
-  ).innerText =
-    royalClips.followers
-      .toLocaleString();
+  document
+    .getElementById("balance")
+    .textContent =
+      state.balance.toFixed(2);
 
+  document
+    .getElementById("followersStat")
+    .textContent =
+      formatNumber(state.followers);
 
-  document.getElementById(
-    "views"
-  ).innerText =
-    royalClips.views
-      .toLocaleString();
+  document
+    .getElementById("viewsStat")
+    .textContent =
+      formatNumber(state.views3m);
 
+  document
+    .getElementById("likesStat")
+    .textContent =
+      formatNumber(state.likes);
 
-  document.getElementById(
-    "monthlyViews"
-  ).innerText =
-    royalClips.monthlyViews
-      .toLocaleString();
-
-
-  document.getElementById(
-    "likes"
-  ).innerText =
-    royalClips.likes
-      .toLocaleString();
-
-
-  document.getElementById(
-    "earnings"
-  ).innerText =
-    "$"+
-    Number(
-      royalClips.earnings
-    ).toFixed(2);
-
-
-  document.getElementById(
-    "balance"
-  ).innerText =
-    "$"+
-    Number(
-      royalClips.balance
-    ).toFixed(2);
+  document
+    .getElementById("followingStat")
+    .textContent =
+      formatNumber(state.following);
 
 
   const followerPercent =
     Math.min(
-      royalClips.followers,
-      100
+      100,
+      state.followers / 100 * 100
     );
-
 
   const viewPercent =
     Math.min(
-      royalClips.views / 100,
-      100
+      100,
+      state.views3m / 10000 * 100
     );
 
 
-  document.getElementById(
-    "followersBar"
-  ).style.width =
-    followerPercent+"%";
+  document
+    .getElementById("followersProgress")
+    .style.width =
+      followerPercent+"%";
+
+  document
+    .getElementById("viewsProgress")
+    .style.width =
+      viewPercent+"%";
 
 
-  document.getElementById(
-    "viewsBar"
-  ).style.width =
-    viewPercent+"%";
+  document
+    .getElementById("followersProgressText")
+    .textContent =
+      formatNumber(state.followers)+" / 100";
+
+
+  document
+    .getElementById("viewsProgressText")
+    .textContent =
+      formatNumber(state.views3m)+" / 10,000";
 
 
   const eligible =
-    royalClips.followers >= 100
-    &&
-    royalClips.views >= 10000;
+    state.followers>=100 &&
+    state.views3m>=10000;
 
 
-  document.getElementById(
-    "eligibility"
-  ).innerText =
-    eligible
-    ?
-    "✓ ELIGIBLE"
-    :
-    "NOT ELIGIBLE";
+  const status =
+    document.getElementById("moneyStatus");
 
+  if(eligible){
 
-  document.getElementById(
-    "profileFollowers"
-  ).innerText =
-    royalClips.followers
-      .toLocaleString();
+    status.textContent="✓ Eligible";
 
+    status.classList.add("ready");
 
-  document.getElementById(
-    "profileLikes"
-  ).innerText =
-    royalClips.likes
-      .toLocaleString();
+  }else{
 
+    status.textContent="Not eligible";
 
-  document.getElementById(
-    "profileName"
-  ).innerText =
-    royalClips.name;
-
-}
-
-
-/* ==============================
-   DEMO PROGRESS
-================================ */
-
-function demoProgress(){
-
-  royalClips.followers += 10;
-
-  royalClips.views += 500;
-
-  royalClips.monthlyViews += 500;
-
-  saveData();
-
-  updateDashboard();
-
-  showToast(
-    "10 followers + 500 views added!"
-  );
-
-}
-
-
-/* ==============================
-   EDIT PROFILE
-================================ */
-
-function editProfile(){
-
-  const name =
-    prompt(
-      "Enter your creator name:",
-      royalClips.name
-    );
-
-
-  if(
-    name &&
-    name.trim()
-  ){
-
-    royalClips.name =
-      name.trim();
-
-
-    saveData();
-
-    updateDashboard();
-
-    showToast(
-      "Profile updated!"
-    );
+    status.classList.remove("ready");
 
   }
 
 }
 
 
-/* ==============================
-   SECURITY HELPER
-================================ */
+/* =========================
+   PROFILE
+========================= */
 
-function escapeHTML(text){
+function updateProfile(){
 
-  return String(text)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  document
+    .getElementById("profileFollowers")
+    .textContent =
+      formatNumber(state.followers);
+
+  document
+    .getElementById("profileFollowing")
+    .textContent =
+      formatNumber(state.following);
+
+  document
+    .getElementById("profileLikes")
+    .textContent =
+      formatNumber(state.likes);
 
 }
 
 
-/* ==============================
+/* =========================
+   DEMO PROGRESS
+========================= */
+
+function addDemoFollowers(){
+
+  state.followers += 10;
+
+  saveState();
+
+  updateMoney();
+
+  updateProfile();
+
+  showToast("+10 followers");
+
+}
+
+
+function addDemoViews(){
+
+  state.views3m += 1000;
+
+  saveState();
+
+  updateMoney();
+
+  showToast("+1,000 views");
+
+}
+
+
+/* =========================
+   FEED TABS
+========================= */
+
+function changeFeed(button,type){
+
+  document
+    .querySelectorAll(".feed-tabs button")
+    .forEach(btn=>{
+      btn.classList.remove("active");
+    });
+
+  button.classList.add("active");
+
+  if(type==="following"){
+
+    const followed =
+      state.videos.filter(
+        video=>video.following
+      );
+
+    if(followed.length===0){
+
+      document
+        .getElementById("feed")
+        .innerHTML=`
+
+        <div
+          style="
+            padding:80px 20px;
+            text-align:center;
+            color:#777;
+          "
+        >
+
+          <div style="font-size:50px">
+            👑
+          </div>
+
+          <h3 style="color:white;margin:15px">
+            No followed creators yet
+          </h3>
+
+          Follow creators to see their clips here.
+
+        </div>
+
+        `;
+
+      return;
+
+    }
+
+    renderSpecificFeed(followed);
+
+  }else{
+
+    renderFeed();
+
+  }
+
+}
+
+
+function renderSpecificFeed(videos){
+
+  const feed =
+    document.getElementById("feed");
+
+  feed.innerHTML="";
+
+  videos.forEach(video=>{
+
+    const original =
+      state.videos;
+
+    const temp =
+      state.videos;
+
+    const card =
+      document.createElement("article");
+
+    card.className="video-card";
+
+    card.innerHTML=`
+
+      <div class="video-bg"></div>
+
+      ${
+        video.videoURL
+        ?
+        `
+        <video
+          class="real-video"
+          src="${video.videoURL}"
+          controls
+          playsinline
+        ></video>
+        `
+        :
+        `
+        <div class="demo-play">
+          ▶
+        </div>
+        `
+      }
+
+      <div class="video-overlay"></div>
+
+      <div class="video-info">
+
+        <div class="creator">
+          ${escapeHTML(video.creator)}
+          <span>✓</span>
+        </div>
+
+        <div class="video-title">
+          ${escapeHTML(video.title)}
+        </div>
+
+        <div class="video-tags">
+          ${escapeHTML(video.tags)}
+        </div>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="action"
+          onclick="likeVideo(${video.id})"
+        >
+          <div class="action-icon">
+            ♥
+          </div>
+          ${formatNumber(video.likes)}
+        </button>
+
+        <button
+          class="action"
+          onclick="openComments(${video.id})"
+        >
+          <div class="action-icon">
+            💬
+          </div>
+          ${video.comments.length}
+        </button>
+
+        <button
+          class="action"
+          onclick="shareVideo(${video.id})"
+        >
+          <div class="action-icon">
+            ↗
+          </div>
+          Share
+        </button>
+
+      </div>
+
+    `;
+
+    feed.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetData(){
+
+  if(
+    !confirm(
+      "Reset all Royal Clips demo data?"
+    )
+  ){
+    return;
+  }
+
+  localStorage.removeItem(
+    "royalClipsV2"
+  );
+
+  location.reload();
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function formatNumber(number){
+
+  return Number(number).toLocaleString();
+
+}
+
+
+function escapeHTML(text){
+
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent=message;
+
+  toast.classList.add("show");
+
+  setTimeout(()=>{
+
+    toast.classList.remove("show");
+
+  },2200);
+
+}
+
+
+/* =========================
    START APP
-================================ */
+========================= */
 
-renderVideos();
+renderFeed();
 
-updateDashboard();
+updateMoney();
+
+updateProfile();
 
 </script>
 
